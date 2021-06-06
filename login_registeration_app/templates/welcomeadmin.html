@@ -1,0 +1,27 @@
+{% extends 'admin.html' %}
+
+{% block content %}
+<div class="userCount">
+<div style="border: 1px solid black; width: 150px; height: 50px; border-radius: 5px; background-image:linear-gradient( black, #343a40); font-size: large;  text-align: center; color: honeydew;">
+    artist count
+{{artist_count}}
+</div>
+
+<div style="border: 1px solid black; width: 150px; height: 50px; border-radius: 5px; background-image:linear-gradient( black, #343a40); font-size: large;  text-align: center; color: honeydew;">
+    music count{{music_count}}
+</div>
+
+<div style="border: 1px solid black; width: 150px; height: 50px; border-radius: 5px; background-image:linear-gradient( black, #343a40); font-size: large;  text-align: center; color: honeydew;">
+    user count
+{{user_count}}
+</div>
+
+<style>
+.userCount{
+    display: flex ;
+    justify-content: space-around;
+    margin-top: 30px;
+}
+</style>
+
+{% endblock %}

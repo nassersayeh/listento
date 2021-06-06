@@ -1,0 +1,36 @@
+{% extends 'admin.html' %}
+
+{% block content %}
+<table class="table table-dark">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">song_name</th>
+        <th scope="col">writer</th>
+        <th scope="col">composer</th>
+        <th scope="col">duration</th>
+        <th scope="col">music</th>
+        <th scope="col">uploaded_by</th>
+        <th scope="col">handle</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for i in all %}
+      <tr>
+        <th scope="row">{{i.id}}</th>
+        <td>{{i.song_name}}</td>
+        <td>{{i.writer}}</td>
+        <td>{{i.composer}}</td>
+        <td>{{i.duration}}</td>
+        <td><audio controls>
+            <source src="{{i.music.url}}" type="audio/ogg">
+            
+        </audio></td>
+        <td>{{i.uploaded_by.username}}</td>
+        <td><a  href="deletemusic/{{i.id}}"type="button" class="btn btn-danger">delete</a></td>
+        
+      </tr>
+    {%endfor%}
+    </tbody>
+  </table>
+{% endblock %}

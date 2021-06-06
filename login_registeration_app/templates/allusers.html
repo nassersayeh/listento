@@ -1,0 +1,41 @@
+{% extends 'admin.html' %}
+
+{% block content %}
+<table class="table table-dark">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">first_name</th>
+        <th scope="col">last_name</th>
+        <th scope="col">Username</th>
+        <th scope="col">Role</th>
+        <th scope="col">Handle</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for i in all %}
+      <tr>
+        <form action='/update/{{i.id}}' method="POST">
+          {% csrf_token %}
+        <th scope="row">{{i.id}}</th>
+        <td><input name="fname" value="{{i.first_name}}"></td>
+        <td><input name="lname" value="{{i.last_name}}"></td>
+        <td><input name="username" value="{{i.username}}"></td>
+        <td>
+          <select name="role">
+            <option value="{{i.role.id}}">{{i.role.role}}</option>
+            {% for x in allroles %}
+            {% if x != i.role %}
+            <option  value="{{x.id}}">{{x.role}}</option>
+            {%endif%}
+            {% endfor %}
+          </select>
+          
+        </td>
+        <td><a  href="deleteuser/{{i.id}}"type="button" class="btn btn-danger">delete</a><button  type="submit" class="btn btn-primary">update</button></td>
+        </form>
+      </tr>
+    {%endfor%}
+    </tbody>
+  </table>
+{% endblock %}

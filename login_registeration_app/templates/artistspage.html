@@ -1,0 +1,59 @@
+        {% extends 'basetheam.html' %}
+
+        {%block content%}
+        {%for i in artists %}
+        <div style="display:inline-flex;">
+            <div class="col-md-6 mb-4" style="display: inline-block;">
+                <img class="rounded-circle" alt="100x100" src="{{i.image.url}}"
+                data-holder-rendered="true" style="width: 300px;height: 300px;">
+                <h2 class="my-5 h2" style="margin-left: 70%;"><a href="/artistprofile/{{i.id}}"> {{i.first_name}} {{i.last_name}}</a></h2>
+            </div>
+        </div>
+    {%endfor%}
+        <nav aria-label="Page navigation example">
+            <ul class="pagination justify-content-center">
+            {% if artists.has_previous %}
+                <li class="page-item">
+                <a class="page-link" href="?page={{ artists.previous_page_number }}">Previous</a>
+            </li>
+            {% else %}
+                <li class="page-item disabled">
+                <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
+            </li>
+            {% endif %}
+
+            {% if artists.number|add:'-4' > 1 %}
+                <li class="page-item"><a class="page-link" href="?page={{ artists.number|add:'-5' }}">&hellip;</a></li>
+            {% endif %}
+
+            {% for i in artists.paginator.page_range %}
+                {% if artists.number == i %}
+                    <li class="page-item active" aria-current="page">
+                <span class="page-link">
+                    {{ i }}
+                    <span class="sr-only">(current)</span>
+                </span>
+                </li>
+                {% elif i > artists.number|add:'-5' and i < artists.number|add:'5' %}
+                    <li class="page-item"><a class="page-link" href="?page={{ i }}">{{ i }}</a></li>
+                {% endif %}
+            {% endfor %}
+
+            {% if artists.paginator.num_pages > artists.number|add:'4' %}
+            <li class="page-item"><a class="page-link" href="?page={{ artists.number|add:'5' }}">&hellip;</a></li>
+            {% endif %}
+
+            {% if artists.has_next %}
+                <li class="page-item">
+                <a class="page-link" href="?page={{ artists.next_page_number }}">Next</a>
+            </li>
+            {% else %}
+                <li class="page-item disabled">
+                <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Next</a>
+            </li>
+            {% endif %}
+        </ul>
+        </nav>
+
+    
+        {%endblock%}

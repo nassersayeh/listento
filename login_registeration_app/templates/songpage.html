@@ -1,0 +1,185 @@
+{% extends 'basetheam.html' %}
+
+{%block content%}
+<style>
+
+
+    .heading {
+    font-size: 25px;
+    margin-right: 25px;
+    }
+
+    .fa {
+    font-size: 25px;
+    }
+
+    .checked {
+    color: orange;
+    }
+
+    /* Three column layout */
+    .side {
+    float: left;
+    width: 15%;
+    margin-top: 10px;
+    }
+
+    .middle {
+    float: left;
+    width: 70%;
+    margin-top: 10px;
+    }
+
+    /* Place text to the right */
+    .right {
+    text-align: right;
+    }
+
+    /* Clear floats after the columns */
+    .row:after {
+    content: "";
+    display: table;
+    clear: both;
+    }
+
+    /* The bar container */
+    .bar-container {
+    width: 100%;
+    background-color: #f1f1f1;
+    text-align: center;
+    color: white;
+    }
+
+    /* Individual bars */
+    .bar-5 {width: 60%; height: 18px; background-color: #04AA6D;}
+    .bar-4 {width: 30%; height: 18px; background-color: #2196F3;}
+    .bar-3 {width: 10%; height: 18px; background-color: #00bcd4;}
+    .bar-2 {width: 4%; height: 18px; background-color: #ff9800;}
+    .bar-1 {width: 15%; height: 18px; background-color: #f44336;}
+
+    /* Responsive layout - make the columns stack on top of each other instead of next to each other */
+    @media (max-width: 400px) {
+    .side, .middle {
+        width: 100%;
+    }
+    /* Hide the right column on small screens */
+    .right {
+        display: none;
+    }
+     
+    .checked {
+        color: red;
+    }
+
+    }
+</style>
+
+<div class="card">
+    <h1>Melhem Barakat </h1>
+    <p>Production Date: 12 Years Ago</p>
+   
+    <h1>{{i.song_name}}</h1>   
+    <audio controls>
+        <source src="{{i.music.url}}" type="audio/ogg">
+       
+    </audio>
+</div>
+{%if filter %}
+<div class="col text-center">
+    <p>Rating = {{num}} Stars</p>
+    <form class="rate-form" action="/rate/{{i.id}}" method="POST" id="{{object.id}}">
+        {% csrf_token %}
+        <span  style=" background-color: inherit !important; border: 0 !important;"type="submit" class="fa fa-star fa-3x my-btn" name="first" id="first"></span>
+        <span style=" background-color: inherit !important; border: 0 !important;"type="submit" class="fa fa-star fa-3x my-btn" name="second" id="second"></span>
+        <span style=" background-color: inherit !important; border: 0 !important;"type="submit" class="fa fa-star fa-3x my-btn" name="third" id="third"></span>
+        <span style=" background-color: inherit !important; border: 0 !important;"type="submit" class="fa fa-star fa-3x my-btn" name="fourth" id="fourth"></span>
+        <span style=" background-color: inherit !important; border: 0 !important;"type="submit" class="fa fa-star fa-3x my-btn" name="fifth" id="fifth"></span>
+    </form>
+    <br>
+    <div id="confirm-box"></div>
+    <p>Rated By {{users}} User.</p>
+</div>
+{%else%}
+<div class="col text-center">
+    <p>Rating = {{num}} Stars</p>
+    <form class="rate-form" action="/rate/{{i.id}}" method="POST" id="{{object.id}}">
+        {% csrf_token %}
+        <button  style=" background-color: inherit !important; border: 0 !important;"type="submit" class="fa fa-star fa-3x my-btn" name="first" id="first"></button>
+        <button style=" background-color: inherit !important; border: 0 !important;"type="submit" class="fa fa-star fa-3x my-btn" name="second" id="second"></button>
+        <button style=" background-color: inherit !important; border: 0 !important;"type="submit" class="fa fa-star fa-3x my-btn" name="third" id="third"></button>
+        <button style=" background-color: inherit !important; border: 0 !important;"type="submit" class="fa fa-star fa-3x my-btn" name="fourth" id="fourth"></button>
+        <button style=" background-color: inherit !important; border: 0 !important;"type="submit" class="fa fa-star fa-3x my-btn" name="fifth" id="fifth"></button>
+    </form>
+    <br>
+    <div id="confirm-box"></div>
+</div>
+{%endif%}
+<script>
+const one = document.getElementById('first')
+const two = document.getElementById('second')
+const three = document.getElementById('third')
+const four = document.getElementById('fourth')
+const five = document.getElementById('fifth')
+
+// get the form, confirm-box and csrf token
+const form = document.querySelector('.rate-form')
+const confirmBox = document.getElementById('confirm-box')
+const csrf = document.getElementsByName('csrfmiddlewaretoken')
+
+const handleStarSelect = (size) => {
+    const children = form.children
+    console.log(children[0])
+    for (let i=0; i < children.length; i++) {
+        if(i <= size) {
+            children[i].classList.add('checked')
+        } else {
+            children[i].classList.remove('checked')
+        }
+    }
+}
+
+const handleSelect = (selection) => {
+    switch(selection){
+        case 'first': {
+            // one.classList.add('checked')
+            // two.classList.remove('checked')
+            // three.classList.remove('checked')
+            // four.classList.remove('checked')
+            // five.classList.remove('checked')
+            handleStarSelect(1)
+            return
+        }
+        case 'second': {
+            handleStarSelect(2)
+            return
+        }
+        case 'third': {
+            handleStarSelect(3)
+            return
+        }
+        case 'fourth': {
+            handleStarSelect(4)
+            return
+        }
+        case 'fifth': {
+            handleStarSelect(5)
+            return
+        }
+        default: {
+            handleStarSelect(0)
+        }
+    }
+
+}
+handleSelect("{{rate}}")
+if (one) {
+    const arr = [one, two, three, four, five]
+
+    arr.forEach(item=> item.addEventListener('mouseover', (event)=>{
+        handleSelect(event.target.id)
+    }))
+}
+
+</script>
+<a href="/home" style="width: 100px; height: 30px; margin-left: 670px; ">Back</a>
+{%endblock%}

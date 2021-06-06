@@ -1,0 +1,37 @@
+{% extends 'loginregthem.html' %}
+{% block content %}
+
+<div class='container' style="margin-top: 50px;margin-left: 400px;">
+<form action="/adduser" method = 'POST' enctype="multipart/form-data">
+    {%csrf_token%}
+    
+<label for="first_name">First Name</label>
+<input type="text" name="first_name" class="form-control" style="width: 300px;">
+<label for="last_name">Last Name</label>
+<input type="text" name="last_name" class="form-control" style="width: 300px;">
+<label for="user_name">User Name</label>
+<input type="text" name="user_name" class="form-control" style="width: 300px;">
+<label for="email">Email</label>
+<input type="email" name="email" class="form-control" style="width: 300px;">
+<label for="password">password</label>
+<input type="password" name="password" class="form-control" style="width: 300px;">
+<label for="password">Confirm Password</label>
+<input type="password" name="confirmPass" class="form-control" style="width: 300px;">
+<label for="birth_date">Birth Date</label>
+<input type ="date" name = ' birth_date' class="form-control" style="width: 300px;">
+<input type="radio"  name="gender" value="1"  >
+<label for="male">Male</label><br>
+<input type="radio"  name="gender" value="2" >
+<label for="female">Female</label><br>
+<input type="radio"  name="gender" value="4" >
+<label for="other">Other</label>
+<br>
+<span class="btn btn-primary btn-file">
+    <input type="file" name="img">
+</span>
+<br>
+
+<input type="submit" value="register" class="form-control" style="width: 300px;"> 
+</form>
+</div>
+{% endblock %}

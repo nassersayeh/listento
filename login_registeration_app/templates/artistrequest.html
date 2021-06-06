@@ -1,0 +1,27 @@
+{% extends 'admin.html' %}
+
+{% block content %}
+<table class="table table-dark">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">First</th>
+        <th scope="col">Last</th>
+        <th scope="col">Username</th>
+        <th scope="col">Handle</th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for i in all %}
+      <tr>
+        <th scope="row">{{i.user.id}}</th>
+        <td>{{i.user.first_name}}</td>
+        <td>{{i.user.last_name}}</td>
+        <td>{{i.user.username}}</td>
+        <td><a href="acceptartist/{{i.user.id}}" type="button" class="btn btn-primary">Accept</a> <a  href="declineartist/{{i.user.id}}"type="button" class="btn btn-danger">decline</a></td>
+        
+      </tr>
+    {%endfor%}
+    </tbody>
+  </table>
+{% endblock %}
